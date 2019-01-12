@@ -7,6 +7,9 @@ imports:
 # https://symfony.com/doc/current/best_practices/configuration.html#application-related-configuration
 parameters:
     locale: en
+    cloud_storage:
+        scope: '%google_cloud_storage_scope%'
+        key: '%google_cloud_storage_private_key_location%'
 
 framework:
     #esi: ~
@@ -68,4 +71,46 @@ swiftmailer:
 
 sensio_framework_extra:
    router:
-        annotations: false
+        annotations: true
+
+fos_rest:
+    param_fetcher_listener: true
+    body_listener: true
+    format_listener: false
+    view:
+        view_response_listener: 'force'
+        formats:
+            xml: true
+            json : true
+        templating_formats:
+            html: true
+        force_redirects:
+            html: true
+        failed_validation: HTTP_BAD_REQUEST
+        default_engine: twig
+    routing_loader:
+        default_format: json
+    serializer:
+        serialize_null: true
+
+knp_gaufrette:
+    stream_wrapper: ~
+    adapters:
+        release_notes_adapter:
+            google_cloud_storage:
+                service_id: 'app.google_cloud_storage.service'
+                bucket_name: '%release_notes_bucket_name%'
+
+    filesystems:
+        release_notes_filesystem:
+            adapter:    release_notes_adapter
+            alias:      release_notes_filesystem
+
+vich_uploader:
+    db_driver: orm
+    storage: gaufrette
+    mappings:
+      release_note_mapping:
+            upload_destination: release_notes_filesystem
+            delete_on_remove: true
+            delete_on_update: true

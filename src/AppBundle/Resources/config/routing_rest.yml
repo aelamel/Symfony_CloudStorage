@@ -1,0 +1,9 @@
+app_bundle_default_rest:
+    type: rest
+    resource: "AppBundle:HomeRest"
+
+app_bundle_releasenotes_rest:
+    type: rest
+    resource: "AppBundle:ReleaseNotesRest"
+    name_prefix: api_
+    prefix: /api

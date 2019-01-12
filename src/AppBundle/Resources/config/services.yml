@@ -1,0 +1,14 @@
+imports:
+    - { resource: repositories.yml }
+services:
+  _defaults:
+    autowire: true
+    public: true
+
+  app.google_cloud_storage_factory:
+    class: AppBundle\Factory\GoogleCloudStorageServiceFactory
+    arguments: ['%cloud_storage%']
+
+  app.google_cloud_storage.service:
+    class: \Google_Service_Storage
+    factory: 'app.google_cloud_storage_factory:createService'

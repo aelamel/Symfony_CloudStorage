@@ -20,6 +20,9 @@ services:
               TIMEZONE: ${TIMEZONE}
         ports:
             - 80:8000
+        environment:
+          GCS_PRIVATE_KEY_LOCATION: ${GCS_PRIVATE_KEY_LOCATION}
+          GCS_RELEASE_NOTES_BUCKET_NAME: ${GCS_RELEASE_NOTES_BUCKET_NAME}
         volumes:
             - ${SYMFONY_APP_PATH}:/var/www/myApp
             - ../../.logs/symfony:/var/www/myApp/var/logs

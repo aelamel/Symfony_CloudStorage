@@ -18,3 +18,4 @@
 **/*.env
 *.env
 .idea/**
+private_key.json
