@@ -1,0 +1,36 @@
+version: '2'
+
+services:
+    db:
+        image: mysql:5.5.54
+        volumes:
+            - ../../.data/myfm:/var/lib/mysql
+        environment:
+            MYSQL_ROOT_PASSWORD: ${MYSQL_ROOT_PASSWORD}
+            MYSQL_DATABASE: ${MYSQL_DATABASE}
+            MYSQL_USER: ${MYSQL_USER}
+            MYSQL_PASSWORD: ${MYSQL_PASSWORD}
+        ports:
+            - 3306:3306
+
+    php:
+        build:
+            context: .
+            args:
+              TIMEZONE: ${TIMEZONE}
+        ports:
+            - 80:8000
+        volumes:
+            - ${SYMFONY_APP_PATH}:/var/www/myApp
+            - ../../.logs/symfony:/var/www/myApp/var/logs
+            - ../../.logs/apache:/var/log/httpd
+
+    pma:
+        image: phpmyadmin/phpmyadmin
+        links:
+          - db
+        environment:
+          PMA_HOST: db
+          PMA_PORT: 3306
+        ports:
+          - 8888:80
