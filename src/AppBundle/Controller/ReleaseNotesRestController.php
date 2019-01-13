@@ -49,16 +49,16 @@ class ReleaseNotesRestController extends FOSRestController
         /** @var EntityManager $em */
         $em = $this->getDoctrine()->getManager();
         return $em->transactional(function() use ($request) {
-            $releaseNote = $request->request->all();
-            $releaseNote['file'] = $request->files->get('file');
+            $releaseNoteData = $request->request->all();
+            $releaseNoteData['file'] = $request->files->get('file');
 
-            $releaseNote = $this->_releaseNotesService->createOrUpdateReleaseNote($releaseNote);
+            $releaseNoteData = $this->_releaseNotesService->createOrUpdateReleaseNote($releaseNoteData);
 
             return $this->view(
                 [
                     'code' => Response::HTTP_CREATED,
                     'status' => 'SUCCESS',
-                    'releaseNote' => $releaseNote
+                    'releaseNote' => $releaseNoteData
                 ]);
         });
     }

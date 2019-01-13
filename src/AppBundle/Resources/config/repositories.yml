@@ -3,5 +3,7 @@ services:
     class: AppBundle\Repository\ReleaseNotesRepository
     factory: ["@doctrine.orm.entity_manager", getRepository]
     arguments: ['AppBundle:ReleaseNotes']
+    calls:
+      - ['setEntityValidator', ['@validator']]
 
   AppBundle\Repository\ReleaseNotesRepository: '@release_notes.repository'

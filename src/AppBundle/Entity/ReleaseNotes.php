@@ -98,6 +98,11 @@ class ReleaseNotes
      */
     private $file;
 
+    public function __construct()
+    {
+        $this->releaseDate = new \DateTime();
+    }
+
     /**
      * @param int $id
      */

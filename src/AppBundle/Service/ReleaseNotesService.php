@@ -22,8 +22,8 @@ class ReleaseNotesService
         return $this->_releaseNotesRepository->findAll();
     }
 
-    public function createOrUpdateReleaseNote($releaseNote)
+    public function createOrUpdateReleaseNote($releaseNoteData)
     {
-        return [];
+        return $this->_releaseNotesRepository->createOrUpdateReleaseNotes($releaseNoteData);
     }
 }
