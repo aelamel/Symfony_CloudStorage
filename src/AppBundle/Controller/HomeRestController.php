@@ -9,7 +9,7 @@ use Symfony\Component\HttpFoundation\Response;
 class HomeRestController extends FOSRestController
 {
     /**
-     * @Rest\Get("/", name="homepage")
+     * @Rest\Get("/")
      */
     public function getHomeAction()
     {

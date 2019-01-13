@@ -4,6 +4,7 @@ namespace AppBundle\Controller;
 
 use AppBundle\Service\ReleaseNotesService;
 use Doctrine\ORM\EntityManager;
+use FOS\RestBundle\Controller\AbstractFOSRestController;
 use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
@@ -14,12 +15,12 @@ use Symfony\Component\HttpFoundation\Response;
  * @package AppBundle\Controller
  *
  */
-class ReleaseNotesRestController extends FOSRestController
+class ReleaseNotesRestController extends AbstractFOSRestController
 {
     /** @var  ReleaseNotesService */
     private $_releaseNotesService;
 
-    function __construct(ReleaseNotesService $releaseNotesService)
+    public function __construct(ReleaseNotesService $releaseNotesService)
     {
         $this->_releaseNotesService = $releaseNotesService;
     }
@@ -38,7 +39,7 @@ class ReleaseNotesRestController extends FOSRestController
         ];
     }
 
-    /***
+    /**
      * @Rest\Post("/release-notes")
      * @Rest\View(statusCode="201")
      *
