@@ -9,6 +9,7 @@ use FOS\RestBundle\Controller\FOSRestController;
 use FOS\RestBundle\Controller\Annotations as Rest;
 use Symfony\Component\HttpFoundation\Request;
 use Symfony\Component\HttpFoundation\Response;
+use Symfony\Component\HttpKernel\Exception\HttpException;
 
 /**
  * Class ReleaseNotesRestController
@@ -41,7 +42,6 @@ class ReleaseNotesRestController extends AbstractFOSRestController
 
     /**
      * @Rest\Post("/release-notes")
-     * @Rest\View(statusCode="201")
      *
      * @param Request $request
      * @return bool|mixed
@@ -57,10 +57,37 @@ class ReleaseNotesRestController extends AbstractFOSRestController
 
             return $this->view(
                 [
-                    'code' => Response::HTTP_CREATED,
                     'status' => 'SUCCESS',
                     'releaseNote' => $releaseNoteData
-                ]);
+                ],
+                Response::HTTP_CREATED
+            );
         });
+    }
+
+    /**
+     * @Rest\Get("/release-notes/{id}/download")
+     * @param $id
+     * @return \FOS\RestBundle\View\View|Response
+     */
+    public function getReleaseNotesDownloadAction($id) {
+
+        try {
+            return $this->_releaseNotesService->downloadReleaseNoteFile($id);
+        } catch (HttpException $e) {
+            return $this->reportError($e, $e->getStatusCode());
+        } catch (\Exception $e) {
+            return $this->reportError($e, 500);
+        }
+    }
+
+    private function reportError(\Exception $e, $code)
+    {
+        return $this->view([
+                'code' => $code,
+                'status' => 'ERROR',
+                'message' => $e->getMessage()
+            ], $code
+        );
     }
 }
