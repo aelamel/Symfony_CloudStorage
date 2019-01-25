@@ -1,77 +1,70 @@
-Symfony Standard Edition
+Cloud Storage / Symfony
 ========================
+This repository contains a simple REST API that communicates with the Google Cloud Storage in order to fetch and store files in buckets.
 
-**WARNING**: This distribution does not support Symfony 4. See the
-[Installing & Setting up the Symfony Framework][15] page to find a replacement
-that fits you best.
+Installation
+------------
 
-Welcome to the Symfony Standard Edition - a fully-functional Symfony
-application that you can use as the skeleton for your new applications.
+Clone this repository :
 
-For details on how to download and get started with Symfony, see the
-[Installation][1] chapter of the Symfony Documentation.
+ ``
+ git clone https://github.com/aelamel/Symfony_CloudStorage.git
+ ``
 
-What's inside?
---------------
+Install the dependencies with composer
 
-The Symfony Standard Edition is configured with the following defaults:
+``
+cd Symfony_CloudStorage && composer install
+``
 
-  * An AppBundle you can use to start coding;
+You may be asked to provide some configuration values (other than Symfony parameters) such as :
 
-  * Twig as the only configured template engine;
+* **google_cloud_storage_private_key_location**: path to your service account credentials files.
+* **release_notes_bucket_name**: The name of the bucket where you want to store you files/objects.
 
-  * Doctrine ORM/DBAL;
+After that, you can run the application:
 
-  * Swiftmailer;
+``
+bin/console server:run
+``
 
-  * Annotations enabled for everything.
+If you are a fun of Docker, there is a docker environment already working, all you have to do is to build and start the containers
 
-It comes pre-configured with the following bundles:
+**Important**
+You must have docker and docker-compose installed on you system.
 
-  * **FrameworkBundle** - The core Symfony framework bundle
+if you haven't them installed, you can check above links to do that.
 
-  * [**SensioFrameworkExtraBundle**][6] - Adds several enhancements, including
-    template and routing annotation capability
+Docker	[https://runnable.com/docker/install-docker-on-linux]
 
-  * [**DoctrineBundle**][7] - Adds support for the Doctrine ORM
+Docker-compose	[https://docs.docker.com/compose/install/#install-compose]
+``
+cd docker
+``
 
-  * [**TwigBundle**][8] - Adds support for the Twig templating engine
+``
+cp .env.dist .env
+``
 
-  * [**SecurityBundle**][9] - Adds security by integrating Symfony's security
-    component
+Modify the .env file variables to your needs and the run:
 
-  * [**SwiftmailerBundle**][10] - Adds support for Swiftmailer, a library for
-    sending emails
+``
+docker-compose build && docker-compose up -d
+``
 
-  * [**MonologBundle**][11] - Adds support for Monolog, a logging library
+After the container has started, the only thing remaining is to install dependencies and run the application
 
-  * **WebProfilerBundle** (in dev/test env) - Adds profiling functionality and
-    the web debug toolbar
+``
+docker-compose exec php bash
+``
 
-  * **SensioDistributionBundle** (in dev/test env) - Adds functionality for
-    configuring and working with Symfony distributions
+``
+composer install
+``
 
-  * [**SensioGeneratorBundle**][13] (in dev env) - Adds code generation
-    capabilities
+``
+bin/console server:run 0.0.0.0
+``
 
-  * [**WebServerBundle**][14] (in dev env) - Adds commands for running applications
-    using the PHP built-in web server
-
-  * **DebugBundle** (in dev/test env) - Adds Debug and VarDumper component
-    integration
-
-All libraries and bundles included in the Symfony Standard Edition are
-released under the MIT or BSD license.
 
 Enjoy!
-
-[1]:  https://symfony.com/doc/3.4/setup.html
-[6]:  https://symfony.com/doc/current/bundles/SensioFrameworkExtraBundle/index.html
-[7]:  https://symfony.com/doc/3.4/doctrine.html
-[8]:  https://symfony.com/doc/3.4/templating.html
-[9]:  https://symfony.com/doc/3.4/security.html
-[10]: https://symfony.com/doc/3.4/email.html
-[11]: https://symfony.com/doc/3.4/logging.html
-[13]: https://symfony.com/doc/current/bundles/SensioGeneratorBundle/index.html
-[14]: https://symfony.com/doc/current/setup/built_in_web_server.html
-[15]: https://symfony.com/doc/current/setup.html
