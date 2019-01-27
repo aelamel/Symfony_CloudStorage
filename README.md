@@ -59,6 +59,10 @@ After the container has started, the only thing remaining is to install dependen
 docker-compose exec php bash
 ``
 
+If you face error running the docker-compose commads, run them with sudo.
+
+Once inside the container run below commands : 
+
 ``
 composer install
 ``
